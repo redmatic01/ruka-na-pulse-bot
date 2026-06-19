@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.vitalygoreshnev.ppm-daily-bot</string>
+
+  <!-- Что запускать -->
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/worker/bin/ppm-daily-bot.sh</string>
+  </array>
+
+  <!-- Когда: каждый день в 07:20 локального времени (MSK) -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>7</integer>
+    <key>Minute</key>
+    <integer>20</integer>
+  </dict>
+
+  <!-- Запустить пропущенный запуск, если в 07:20 ноут спал -->
+  <key>RunAtLoad</key>
+  <false/>
+
+  <!-- Если за время простоя пропущено окно — догнать после wake -->
+  <!-- (launchd сам так делает, отдельный ключ не нужен) -->
+
+  <!-- Логи launchd-обёртки (stdout/stderr самой обёртки) -->
+  <key>StandardOutPath</key>
+  <string>/Users/worker/Logs/ppm-daily-bot/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/worker/Logs/ppm-daily-bot/launchd.err.log</string>
+
+  <!-- Среда: даём базовый PATH чтобы tailscale/python подхватывались -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+</dict>
+</plist>
