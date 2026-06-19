@@ -1,0 +1,11 @@
+{
+  "name": "ruka-na-pulse-bot-worker",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^3.95.0"
+  }
+}
