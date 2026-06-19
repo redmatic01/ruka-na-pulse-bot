@@ -12,6 +12,29 @@ import datamart from "./datamart.json";
 import { formatSummary } from "./formatter.js";
 
 const BOT_NAME = "Ruka-na-Pulse Demo";
+const IMG_BASE =
+  "https://raw.githubusercontent.com/redmatic01/ruka-na-pulse-bot/main/data/images";
+
+function ruDate(iso) {
+  const [y, m, d] = iso.split("-");
+  return `${d}.${m}.${y}`;
+}
+
+async function sendDailyReport(token, chatId, day) {
+  const iso = day.date;
+  const photoResp = await tg(token, "sendPhoto", {
+    chat_id: chatId,
+    photo: `${IMG_BASE}/${iso}.png`,
+    caption: `📊 Ежедневный отчёт ППМ — ${ruDate(iso)}`,
+  });
+  const replyTo = photoResp?.result?.message_id;
+  await tg(token, "sendMessage", {
+    chat_id: chatId,
+    text: formatSummary(day),
+    disable_web_page_preview: true,
+    ...(replyTo ? { reply_to_message_id: replyTo, allow_sending_without_reply: true } : {}),
+  });
+}
 
 function findDay(iso) {
   return datamart.days.find((d) => d.date === iso) || null;
@@ -51,11 +74,7 @@ async function handleUpdate(update, env) {
     const iso = q.data;
     const day = findDay(iso);
     if (day) {
-      await tg(token, "sendMessage", {
-        chat_id: chatId,
-        text: formatSummary(day),
-        disable_web_page_preview: true,
-      });
+      await sendDailyReport(token, chatId, day);
     } else {
       await tg(token, "sendMessage", { chat_id: chatId, text: `Нет данных за ${iso}` });
     }
@@ -89,11 +108,7 @@ async function handleUpdate(update, env) {
 
   if (text.startsWith("/demo")) {
     const latest = datamart.days[datamart.days.length - 1];
-    await tg(token, "sendMessage", {
-      chat_id: chatId,
-      text: formatSummary(latest),
-      disable_web_page_preview: true,
-    });
+    await sendDailyReport(token, chatId, latest);
     return;
   }
 
@@ -106,16 +121,11 @@ async function handleUpdate(update, env) {
     return;
   }
 
-  // YYYY-MM-DD в чате — тоже принимаем.
   const iso = text.match(/^(\d{4}-\d{2}-\d{2})$/)?.[1];
   if (iso) {
     const day = findDay(iso);
     if (day) {
-      await tg(token, "sendMessage", {
-        chat_id: chatId,
-        text: formatSummary(day),
-        disable_web_page_preview: true,
-      });
+      await sendDailyReport(token, chatId, day);
     } else {
       await tg(token, "sendMessage", {
         chat_id: chatId,
