@@ -106,6 +106,40 @@ python tests/test_round_trip.py
 # OK  2026-05-27 ... OK  2026-06-03
 ```
 
+## Картинка дневного отчёта
+
+В Telegram бот шлёт сначала PNG с подписью «Ежедневный отчёт ППМ — DD.MM.YYYY»,
+затем reply'ом текстовую сводку (см. `bot/sender.py` / Worker `worker/src/index.js`).
+
+PNG генерируется из того же датамарта через HTML-шаблон + Playwright Chromium —
+ровно как в проде:
+
+```bash
+pip install -r requirements-render.txt
+playwright install chromium
+
+# Сгенерировать картинку за конкретный день:
+python tools/render_image.py 2026-06-03
+
+# Кастомный путь + HTML для отладки:
+python tools/render_image.py 2026-06-18 \
+    --out data/images/2026-06-18.png \
+    --html /tmp/preview.html
+```
+
+Шаблон в `tools/templates/daily_report.html` — Inter font, SVG outline-иконки,
+зелёные/красные RR-бейджи, бар выполнения плана. Скрипт берёт день из
+`data/datamart.json`, заполняет плейсхолдеры, делает screenshot `.card`.
+
+**Workflow «добавить новый день»:**
+
+1. Добавить запись в `data/raw_messages.txt` (новое TG-сообщение боту) → запустить
+   `python tools/parse_messages.py`. Либо отредактировать `data/datamart.json` напрямую.
+2. `python tools/render_image.py YYYY-MM-DD` → `data/images/YYYY-MM-DD.png`.
+3. `git add -A && git commit -m "data: add YYYY-MM-DD" && git push`.
+4. Бот ([@CaseFinPulseBot](https://t.me/CaseFinPulseBot)) сразу подхватит — кнопка
+   с новой датой появится автоматически (Worker читает `datamart.days`).
+
 ## Запуск
 
 ```bash

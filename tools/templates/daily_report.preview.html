@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<title>ППМ — ежедневная сводка</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #0f172a;
+    --ink-2: #334155;
+    --muted: #94a3b8;
+    --line: #e2e8f0;
+    --line-2: #f1f5f9;
+    --accent: #10b981;
+    --accent-bg: #ecfdf5;
+    --green: #10b981;
+    --green-bg: #ecfdf5;
+    --red: #ef4444;
+    --red-bg: #fef2f2;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; }
+  .card { width: 1024px; padding: 24px 28px 18px; }
+
+  /* HEADER */
+  header { display: grid; grid-template-columns: 220px 1fr 220px; align-items: center; padding-bottom: 12px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 16px; color: var(--ink); }
+  .logo-mark { width: 18px; height: 18px; display: inline-block; }
+  .logo-mark::before {
+    content: ""; display: block; width: 0; height: 0;
+    border-left: 9px solid transparent; border-right: 9px solid transparent;
+    border-bottom: 14px solid var(--green);
+  }
+  .title { text-align: center; }
+  .title h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .subtitle { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .asof { justify-self: end; font-size: 12px; color: var(--ink-2);
+          background: var(--line-2); padding: 6px 12px; border-radius: 999px; }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; table-layout: fixed; }
+  thead th { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted);
+             padding: 12px 14px 8px; text-align: left; border-bottom: 1px solid var(--line); }
+  thead th.center { text-align: left; }
+  thead th.label { width: 240px; }
+  thead th.day { width: 130px; }
+  thead th.month, thead th.q { width: 280px; }
+
+  tbody tr { border-bottom: 1px solid var(--line-2); }
+  tbody td { padding: 18px 14px; vertical-align: top; }
+
+  .metric { display: flex; align-items: center; gap: 12px; }
+  .icon { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-bg); color: var(--green);
+          display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .metric-name { font-size: 13px; color: var(--ink-2); line-height: 1.25; }
+
+  .num { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+  .num-day { font-size: 24px; }
+
+  .period { position: relative; }
+  .period .top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .period .plan { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .period .pct { font-size: 12px; color: var(--muted); font-weight: 500; }
+  .period .rr { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600;
+                margin-top: 8px; padding: 2px 8px; border-radius: 999px; }
+  .period .rr.up   { color: var(--green); background: var(--green-bg); }
+  .period .rr.down { color: var(--red);   background: var(--red-bg); }
+  .period .bar { height: 4px; background: var(--line); border-radius: 999px; margin-top: 10px; overflow: hidden; }
+  .period .bar > div { height: 100%; border-radius: 999px; background: var(--green); }
+  .period .bar > div.red { background: var(--red); }
+
+  /* FOOTER */
+  footer { font-size: 11px; color: var(--muted); padding-top: 14px; border-top: 1px solid var(--line);
+           margin-top: 12px; }
+  .rr-mark.up   { color: var(--green); }
+  .rr-mark.down { color: var(--red); }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <header>
+    <div class="logo"><span class="logo-mark"></span><span>Плати по миру</span></div>
+    <div class="title">
+      <h1>ППМ · Ежедневная сводка</h1>
+      <span class="subtitle">за 03.06.2026</span>
+    </div>
+    <div class="asof">на дату 04.06.2026</div>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="label"></th>
+        <th class="day">ДЕНЬ</th>
+        <th class="month">ИЮНЬ</th>
+        <th class="q">II КВАРТАЛ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <td class="metric-cell">
+        <div class="metric">
+          <div class="icon">👤</div>
+          <div class="metric-name">Новые клиенты</div>
+        </div>
+      </td>
+      <td class="day-cell"><div class="num num-day">1 293</div></td>
+      <td class="period">
+      <div class="top">
+        <div class="num">3 718</div>
+        <div class="pct">7%</div>
+      </div>
+      <div class="plan">из 55 000</div>
+      <div class="rr down">RR&nbsp;67,6%&nbsp;↓</div>
+      <div class="bar"><div class="red" style="width:6.8%"></div></div>
+    </td>
+      <td class="period">
+      <div class="top">
+        <div class="num">75 906</div>
+        <div class="pct">51%</div>
+      </div>
+      <div class="plan">из 150 000</div>
+      <div class="rr down">RR&nbsp;72,0%&nbsp;↓</div>
+      <div class="bar"><div class="red" style="width:50.6%"></div></div>
+    </td>
+    </tr>
+<tr>
+      <td class="metric-cell">
+        <div class="metric">
+          <div class="icon">💳</div>
+          <div class="metric-name">Новые карты</div>
+        </div>
+      </td>
+      <td class="day-cell"><div class="num num-day">1 402</div></td>
+      <td class="period">
+      <div class="top">
+        <div class="num">4 038</div>
+        <div class="pct">7%</div>
+      </div>
+      <div class="plan">из 55 000</div>
+      <div class="rr down">RR&nbsp;73,4%&nbsp;↓</div>
+      <div class="bar"><div class="red" style="width:7.3%"></div></div>
+    </td>
+      <td class="period">
+      <div class="top">
+        <div class="num">82 915</div>
+        <div class="pct">55%</div>
+      </div>
+      <div class="plan">из 150 000</div>
+      <div class="rr down">RR&nbsp;78,6%&nbsp;↓</div>
+      <div class="bar"><div class="red" style="width:55.3%"></div></div>
+    </td>
+    </tr>
+<tr>
+      <td class="metric-cell">
+        <div class="metric">
+          <div class="icon">💰</div>
+          <div class="metric-name">GMV, млн руб.</div>
+        </div>
+      </td>
+      <td class="day-cell"><div class="num num-day">61,3</div></td>
+      <td class="period">
+      <div class="top">
+        <div class="num">173,2</div>
+        <div class="pct">10%</div>
+      </div>
+      <div class="plan">из 1 650,0 млн&nbsp;руб.</div>
+      <div class="rr up">RR&nbsp;104,9%&nbsp;↑</div>
+      <div class="bar"><div class="" style="width:10.5%"></div></div>
+    </td>
+      <td class="period">
+      <div class="top">
+        <div class="num">2 718,8</div>
+        <div class="pct">68%</div>
+      </div>
+      <div class="plan">из 4 000,0 млн&nbsp;руб.</div>
+      <div class="rr down">RR&nbsp;96,6%&nbsp;↓</div>
+      <div class="bar"><div class="red" style="width:68.0%"></div></div>
+    </td>
+    </tr>
+<tr>
+      <td class="metric-cell">
+        <div class="metric">
+          <div class="icon">📈</div>
+          <div class="metric-name">Gross Profit,<br>млн руб.</div>
+        </div>
+      </td>
+      <td class="day-cell"><div class="num num-day">9,5</div></td>
+      <td class="period">
+      <div class="top">
+        <div class="num">23,3</div>
+        <div class="pct">10%</div>
+      </div>
+      <div class="plan">из 230,0 млн&nbsp;руб.</div>
+      <div class="rr up">RR&nbsp;101,4%&nbsp;↑</div>
+      <div class="bar"><div class="" style="width:10.1%"></div></div>
+    </td>
+      <td class="period">
+      <div class="top">
+        <div class="num">437,4</div>
+        <div class="pct">77%</div>
+      </div>
+      <div class="plan">из 570,0 млн&nbsp;руб.</div>
+      <div class="rr up">RR&nbsp;109,1%&nbsp;↑</div>
+      <div class="bar"><div class="" style="width:76.7%"></div></div>
+    </td>
+    </tr>
+<tr>
+      <td class="metric-cell">
+        <div class="metric">
+          <div class="icon">💎</div>
+          <div class="metric-name">Net Profit,<br>млн руб.</div>
+        </div>
+      </td>
+      <td class="day-cell"><div class="num num-day">4,8</div></td>
+      <td class="period">
+      <div class="top">
+        <div class="num">10,0</div>
+        <div class="pct">11%</div>
+      </div>
+      <div class="plan">из 90,0 млн&nbsp;руб.</div>
+      <div class="rr up">RR&nbsp;110,8%&nbsp;↑</div>
+      <div class="bar"><div class="" style="width:11.1%"></div></div>
+    </td>
+      <td class="period">
+      <div class="top">
+        <div class="num">181,5</div>
+        <div class="pct">91%</div>
+      </div>
+      <div class="plan">из 200,0 млн&nbsp;руб.</div>
+      <div class="rr up">RR&nbsp;129,0%&nbsp;↑</div>
+      <div class="bar"><div class="" style="width:90.7%"></div></div>
+    </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <footer>
+    <strong>RR</strong> — темп выполнения плана. Справа от значения указан плановый абсолютный показатель за период.
+  </footer>
+
+</div>
+</body>
+</html>

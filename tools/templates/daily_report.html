@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<title>ППМ — ежедневная сводка</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #0f172a;
+    --ink-2: #334155;
+    --muted: #94a3b8;
+    --line: #e2e8f0;
+    --line-2: #f1f5f9;
+    --accent: #10b981;
+    --accent-bg: #ecfdf5;
+    --green: #10b981;
+    --green-bg: #ecfdf5;
+    --red: #ef4444;
+    --red-bg: #fef2f2;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; }
+  .card { width: 1024px; padding: 24px 28px 18px; }
+
+  /* HEADER */
+  header { display: grid; grid-template-columns: 220px 1fr 220px; align-items: center; padding-bottom: 12px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 16px; color: var(--ink); }
+  .logo-mark { width: 18px; height: 18px; color: var(--green); }
+  .logo-mark svg { width: 100%; height: 100%; }
+  .title { text-align: center; }
+  .title h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .subtitle { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .asof { justify-self: end; font-size: 12px; color: var(--ink-2);
+          background: var(--line-2); padding: 6px 12px; border-radius: 999px; }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; table-layout: fixed; }
+  thead th { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted);
+             padding: 12px 14px 8px; text-align: left; border-bottom: 1px solid var(--line); }
+  thead th.center { text-align: left; }
+  thead th.label { width: 240px; }
+  thead th.day { width: 130px; }
+  thead th.month, thead th.q { width: 280px; }
+
+  tbody tr { border-bottom: 1px solid var(--line-2); }
+  tbody td { padding: 18px 14px; vertical-align: top; }
+
+  .metric { display: flex; align-items: center; gap: 12px; }
+  .icon { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-bg); color: var(--green);
+          display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .icon svg { width: 18px; height: 18px; }
+  .metric-name { font-size: 13px; color: var(--ink-2); line-height: 1.25; }
+
+  .num { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+  .num-day { font-size: 24px; }
+
+  .period { position: relative; }
+  .period .top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .period .plan { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .period .pct { font-size: 12px; color: var(--muted); font-weight: 500; }
+  .period .rr { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600;
+                margin-top: 8px; padding: 2px 8px; border-radius: 999px; }
+  .period .rr.up   { color: var(--green); background: var(--green-bg); }
+  .period .rr.down { color: var(--red);   background: var(--red-bg); }
+  .period .bar { height: 4px; background: var(--line); border-radius: 999px; margin-top: 10px; overflow: hidden; }
+  .period .bar > div { height: 100%; border-radius: 999px; background: var(--green); }
+  .period .bar > div.red { background: var(--red); }
+
+  /* FOOTER */
+  footer { font-size: 11px; color: var(--muted); padding-top: 14px; border-top: 1px solid var(--line);
+           margin-top: 12px; }
+  .rr-mark.up   { color: var(--green); }
+  .rr-mark.down { color: var(--red); }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <header>
+    <div class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"></polyline></svg></span><span>Плати по миру</span></div>
+    <div class="title">
+      <h1>ППМ · Ежедневная сводка</h1>
+      <span class="subtitle">за {{date_human}}</span>
+    </div>
+    <div class="asof">на дату {{asof_human}}</div>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="label"></th>
+        <th class="day">ДЕНЬ</th>
+        <th class="month">{{month_label}}</th>
+        <th class="q">{{quarter_label}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{rows_html}}
+    </tbody>
+  </table>
+
+  <footer>
+    <strong>RR</strong> — темп выполнения плана. Справа от значения указан плановый абсолютный показатель за период.
+  </footer>
+
+</div>
+</body>
+</html>

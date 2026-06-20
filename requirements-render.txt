@@ -1,0 +1,7 @@
+# Для рендеринга PNG-картинок (tools/render_image.py).
+# Не нужно для запуска бота — только для добавления новых дней.
+#
+# Установка:
+#     pip install -r requirements-render.txt
+#     playwright install chromium
+playwright>=1.40

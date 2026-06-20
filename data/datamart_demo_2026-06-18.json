@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "source": "Demo dataset — extrapolated trend for 18.06.2026 (not real)",
+  "period": { "from": "2026-06-18", "to": "2026-06-18", "days_count": 1 },
+  "days": [
+    {
+      "date": "2026-06-18",
+      "daily": {
+        "new_clients": 1180,
+        "new_cards": { "total": 1290, "travel": 480, "premium": 40, "subscriptions": 770 },
+        "gmv": { "total": 55400000, "cards_issue": 4700000, "topups": 50700000 },
+        "revenue": { "total": 10100000, "cards_issue": 4500000, "topups": 5600000 },
+        "gross_profit": {
+          "total": 7300000, "cards_issue": 4000000, "topups": 3300000,
+          "opex": -1050000, "comex": -3120000
+        },
+        "net_profit": 3130000
+      },
+      "month": {
+        "label": "Июнь 2026",
+        "new_clients": { "actual": 21850, "plan": 55000, "pct_of_plan": 0.397, "run_rate": 0.662 },
+        "new_cards": {
+          "actual": 23720, "plan": 55000, "pct_of_plan": 0.431, "run_rate": 0.719,
+          "travel": 8550, "premium": 730, "subscriptions": 14440
+        },
+        "gmv": {
+          "actual": 996000000, "plan": 1650000000, "pct_of_plan": 0.604, "run_rate": 1.006,
+          "cards_issue": 88500000, "topups": 907500000
+        },
+        "revenue": { "actual": 183700000, "cards_issue": 81900000, "topups": 101800000 },
+        "gross_profit": {
+          "actual": 131500000, "plan": 230000000, "pct_of_plan": 0.572, "run_rate": 0.953,
+          "cards_issue": 71900000, "topups": 59600000,
+          "opex": -18950000, "comex": -56180000
+        },
+        "net_profit": { "actual": 56370000, "plan": 90000000, "pct_of_plan": 0.626, "run_rate": 1.044 },
+        "days_elapsed": 18
+      },
+      "quarter": {
+        "label": "Q2 2026",
+        "new_clients": { "actual": 94038, "plan": 150000, "pct_of_plan": 0.627, "run_rate": 0.942 },
+        "new_cards": {
+          "actual": 102597, "plan": 150000, "pct_of_plan": 0.684, "run_rate": 1.028,
+          "travel": 32480, "premium": 3071, "subscriptions": 67046
+        },
+        "gmv": {
+          "actual": 3541300000, "plan": 4000000000, "pct_of_plan": 0.885, "run_rate": 1.331,
+          "cards_issue": 371300000, "topups": 3170000000
+        },
+        "revenue": { "actual": 696300000, "cards_issue": 352900000, "topups": 343400000 },
+        "gross_profit": {
+          "actual": 543700000, "plan": 570000000, "pct_of_plan": 0.954, "run_rate": 1.434,
+          "cards_issue": 310800000, "topups": 232900000,
+          "opex": -99900000, "comex": -224000000
+        },
+        "net_profit": { "actual": 219800000, "plan": 200000000, "pct_of_plan": 1.099, "run_rate": 1.652 },
+        "days_elapsed": 79
+      }
+    }
+  ]
+}
